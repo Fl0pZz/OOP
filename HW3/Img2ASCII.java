@@ -3,14 +3,13 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 
 public class Img2ASCII {
-    private static final String INCORRECT_ROTATION = "Sorry, incorrect value of degree rotation";
 
-    private BufferedImage img = null;
+    private BufferedImage img;
     private String pathToResult;
     private Helper helper = new Helper();
 
 
-    public Img2ASCII(BufferedImage img, String pathToManipulatedASCIIImage) {
+    Img2ASCII(BufferedImage img, String pathToManipulatedASCIIImage) {
         this.img = img;
         this.pathToResult = pathToManipulatedASCIIImage;
     }
@@ -19,14 +18,13 @@ public class Img2ASCII {
     // Преобразует изображение в ascii формат
     public void convertToAscii() throws IOException {
         PrintWriter printWriter = helper.makePrintWriter(pathToResult);
-
         for (int i = 0; i < img.getHeight(); i++) {
             for (int j = 0; j < img.getWidth(); j++) {
                 Color pixelColor = new Color(img.getRGB(j, i));
                 double pixelValue =
                         pixelColor.getRed() * 0.3 + pixelColor.getGreen() * 0.11 + pixelColor.getBlue() * 0.59;
-                String s = helper.valueToChar(pixelValue);
-                helper.printToFile(String.valueOf(s), printWriter);
+                String s = valueToChar(pixelValue);
+                helper.printToFile(s, printWriter);
             }
             helper.printToFile("", printWriter);
         }
@@ -102,10 +100,10 @@ public class Img2ASCII {
                         }
                     }
                 } else {
-                    throw new Exception(INCORRECT_ROTATION);
+                    throw new Exception(Constants.INCORRECT_ROTATION);
                 }
-                for (int x = 0; x < newAllSymbols.length; x++) {
-                    String currLine = String.valueOf(newAllSymbols[x]);
+                for (char[] newAllSymbol : newAllSymbols) {
+                    String currLine = String.valueOf(newAllSymbol);
                     helper.printToFile(currLine, printWriter);
                     helper.printToFile("", printWriter);
                 }
@@ -115,5 +113,30 @@ public class Img2ASCII {
             e.printStackTrace();
         }
         printWriter.close();
+    }
+
+    private String valueToChar(double value) {
+        String str;
+
+        if (value >= 230.0) {
+            str = " ";
+        } else if (value >= 200.0) {
+            str = ".";
+        } else if (value >= 180.0) {
+            str = "*";
+        } else if (value >= 160.0) {
+            str = ":";
+        } else if (value >= 130.0) {
+            str = "o";
+        } else if (value >= 100.0) {
+            str = "&";
+        } else if (value >= 70.0) {
+            str = "8";
+        } else if (value >= 50.0) {
+            str = "#";
+        } else {
+            str = "@";
+        }
+        return str;
     }
 }
