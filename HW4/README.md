@@ -1,3 +1,1 @@
-# Для чьего проекта тесты?
-
-* [lorddux](https://github.com/lorddux/OOP/)
+# [Ссылка на pull-request тестов](https://github.com/lorddux/OOP/pull/1/commits/ac01304784184135fb6183ee88e4bebe8e235d24)
