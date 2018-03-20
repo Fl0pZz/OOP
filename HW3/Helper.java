@@ -15,7 +15,9 @@ public class Helper {
         }
         return printWriter;
     }
-
+    /*
+     * Однобуквенные переменные i и j. Названия ничего не говорит, что это?
+     */
     public StringBuilder makeStringBuilderToResult(int i, int j, String resultPath) {
         StringBuilder pathToASCIIImage = new StringBuilder(resultPath);
         pathToASCIIImage.append("_");
