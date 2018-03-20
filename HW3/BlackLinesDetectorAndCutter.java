@@ -25,11 +25,14 @@ public class BlackLinesDetectorAndCutter {
         for (int i = 0; i < height; i++) {
             boolean haveFoundLine = true;
             Color pixelColor = null;
-            if (isVertical) {
+            if (isVertical) { // отсутсвие пробела после инициализации локальных переменных и оператора
                 pixelColor = new Color(img.getRGB(i, 0));
             } else {
                 pixelColor = new Color(img.getRGB(0, i));
             }
+            /*
+             * Условия записаны с плохим форматирование - каждое условие нужно было с новой строчки записать, как на 45 строчке
+             */
             if (pixelColor.getRed() <= Constants.PIXEL_MAX_VALUE && pixelColor.getGreen() <= Constants.PIXEL_MAX_VALUE
                     && pixelColor.getBlue() <= Constants.PIXEL_MAX_VALUE) {
                 for (int j = 1; j < width; j++) {
@@ -63,7 +66,7 @@ public class BlackLinesDetectorAndCutter {
         Integer width = null;
         Integer height = null;
         boolean isVertical = option.equals(Constants.VERTICAL);
-        if (isVertical) {
+        if (isVertical) { // Пропущена пустая строка
             width = img.getHeight();
             height = img.getWidth();
         } else {
@@ -74,7 +77,7 @@ public class BlackLinesDetectorAndCutter {
         List<Pair<Integer, Integer>> parts = new ArrayList<>();
         boolean isSubImageBeginning = true;
         Integer currentBegin = null;
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < height; i++) { // Опять пропущена пустая строка
             if (!allLines.contains(i) && isSubImageBeginning) {
                 currentBegin = i;
                 isSubImageBeginning = false;
