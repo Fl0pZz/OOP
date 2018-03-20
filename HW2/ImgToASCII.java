@@ -23,10 +23,16 @@ public class ImgToASCII {
 
     @Parameter(names={"--img", "-i"})
     public String imgPath = null;
-
+    /*
+     * Поля класса должны быть объявлены в порядке: public, protected, private
+     */
     private BufferedImage img = null;
     public String pathToHorizontalMirror = null;
     public String pathToVerticalMirror = null;
+    /*
+     * Возможно не стоило на каждый интсанс класса создавать еще один класс. Альтернативные вариант:
+     *     создать конструктор, один из аргументов которого - инстанс WriterToFileHelper
+     */
     private WriterToFileHelper writerToFileHelper = new WriterToFileHelper();
 
 
@@ -41,7 +47,11 @@ public class ImgToASCII {
     // Преобразует изображение в ascii формат
     public void convertToAscii() throws IOException {
         PrintWriter printWriter = writerToFileHelper.makePrintWriter(resultPath);
-
+        
+        /*
+         * Проход по всему изображению. Кажется это довольно полезаная функция, поэтому я бы сделал тут функицию,
+         * аргумент которого - функция преобразования каждого пикселя, а возвращаемое значение - новая картинка
+         */
         for (int i = 0; i < img.getHeight(); i++) {
             for (int j = 0; j < img.getWidth(); j++) {
                 Color pixelColor = new Color(img.getRGB(j, i));
@@ -62,6 +72,9 @@ public class ImgToASCII {
 
         for (int i = 0; i < img.getHeight() / times; i++) {
             for (int j = 0; j < img.getWidth() / times; j++) {
+                /*
+                 * Зачем этот тут? Почему получив ошибку, никак ее не обрабатываем?
+                 */
                 BufferedImage subImage;
                 try {
                     subImage = img.getSubimage(j * times, i * times, times, times);
@@ -145,6 +158,7 @@ public class ImgToASCII {
                     counter++;
                 }
                 char[][] newAllSymbols = new char[width][height];
+                // Кажется, чтобы разгрузить эту функцию, функции поворота можно было бы вынести отдельно, вызывая их когда нужно
                 if (degree == 270) {
                     for (int x = 0; x < width; x++) {
                         for (int y = 0; y < height; y++) {
